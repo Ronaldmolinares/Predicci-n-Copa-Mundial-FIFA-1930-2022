@@ -1,0 +1,179 @@
+{
+  "project": "Copa Mundial FIFA 1930-2022 — ML Predicción",
+  "phase": "Fase 2 — Preprocesamiento",
+  "feature_names_rf": [
+    "home_hist_win_rate",
+    "home_hist_draw_rate",
+    "home_hist_avg_gf",
+    "home_hist_avg_ga",
+    "home_hist_avg_gd",
+    "home_hist_matches",
+    "away_hist_win_rate",
+    "away_hist_draw_rate",
+    "away_hist_avg_gf",
+    "away_hist_avg_ga",
+    "away_hist_avg_gd",
+    "away_hist_matches",
+    "home_recent_win_rate",
+    "away_recent_win_rate",
+    "delta_win_rate",
+    "delta_avg_gf",
+    "delta_avg_gd",
+    "delta_wc_exp",
+    "home_wc_appearances",
+    "away_wc_appearances",
+    "Year",
+    "stage_encoded",
+    "home_team",
+    "away_team"
+  ],
+  "feature_groups": {
+    "numeric": [
+      "home_hist_win_rate",
+      "home_hist_draw_rate",
+      "home_hist_avg_gf",
+      "home_hist_avg_ga",
+      "home_hist_avg_gd",
+      "home_hist_matches",
+      "away_hist_win_rate",
+      "away_hist_draw_rate",
+      "away_hist_avg_gf",
+      "away_hist_avg_ga",
+      "away_hist_avg_gd",
+      "away_hist_matches",
+      "home_recent_win_rate",
+      "away_recent_win_rate",
+      "delta_win_rate",
+      "delta_avg_gf",
+      "delta_avg_gd",
+      "delta_wc_exp",
+      "home_wc_appearances",
+      "away_wc_appearances",
+      "Year"
+    ],
+    "ordinal": [
+      "stage_encoded"
+    ],
+    "categorical": [
+      "home_team",
+      "away_team"
+    ]
+  },
+  "kmeans_features": [
+    "total_matches",
+    "win_rate",
+    "draw_rate",
+    "loss_rate",
+    "avg_goals_for",
+    "avg_goals_against",
+    "avg_goal_diff",
+    "num_tournaments",
+    "best_stage",
+    "goals_per_tournament"
+  ],
+  "target_col": "result",
+  "target_classes": [
+    "away_win",
+    "draw",
+    "home_win"
+  ],
+  "target_mapping": {
+    "0": "away_win",
+    "1": "draw",
+    "2": "home_win"
+  },
+  "leakage_cols_excluded": [
+    "home_score",
+    "away_score",
+    "home_xg",
+    "away_xg",
+    "goal_diff",
+    "total_goals",
+    "went_to_pen",
+    "home_goal",
+    "away_goal",
+    "home_goal_long",
+    "away_goal_long",
+    "home_own_goal",
+    "away_own_goal",
+    "home_penalty_goal",
+    "away_penalty_goal",
+    "home_penalty",
+    "away_penalty",
+    "home_manager",
+    "away_manager",
+    "home_captain",
+    "away_captain"
+  ],
+  "train_info": {
+    "n_samples": 836,
+    "years": [
+      1930,
+      1934,
+      1938,
+      1950,
+      1954,
+      1958,
+      1962,
+      1966,
+      1970,
+      1974,
+      1978,
+      1982,
+      1986,
+      1990,
+      1994,
+      1998,
+      2002,
+      2006,
+      2010,
+      2014
+    ],
+    "class_dist": {
+      "home_win": 477,
+      "draw": 186,
+      "away_win": 173
+    }
+  },
+  "test_info": {
+    "n_samples": 128,
+    "years": [
+      2018,
+      2022
+    ],
+    "class_dist": {
+      "home_win": 55,
+      "away_win": 45,
+      "draw": 28
+    }
+  },
+  "stage_encoding": {
+    "group stage": 1,
+    "first group stage": 1,
+    "second group stage": 1,
+    "group": 1,
+    "first round": 1,
+    "preliminary round": 1,
+    "pool": 1,
+    "group stage play-off": 2,
+    "second round": 2,
+    "round of 16": 2,
+    "last 16": 2,
+    "quarter-finals": 3,
+    "quarter finals": 3,
+    "quarterfinals": 3,
+    "semi-finals": 4,
+    "semi finals": 4,
+    "semifinals": 4,
+    "third place": 5,
+    "third-place match": 5,
+    "third-place play-off": 5,
+    "third place play-off": 5,
+    "play-off for third place": 5,
+    "final stage": 5,
+    "final": 6,
+    "unknown": 0
+  },
+  "recent_window": 5,
+  "split_strategy": "temporal — últimos 2 torneos como test"
+}

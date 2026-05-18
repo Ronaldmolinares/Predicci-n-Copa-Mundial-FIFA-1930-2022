@@ -93,7 +93,7 @@ def prepare_matches(df: pd.DataFrame) -> pd.DataFrame:
     total_goals   : home_score + away_score
     goal_diff     : home_score - away_score (perspectiva local)
     went_to_pen   : bool — partido se definió en penales
-    year          : int — si no existe ya en el DF
+    Year          : int — si no existe ya en el DF
     """
     df = df.copy()
 
@@ -120,14 +120,14 @@ def prepare_matches(df: pd.DataFrame) -> pd.DataFrame:
         df["went_to_pen"] = False
 
     # Año del torneo (columna suele venir incluida; si no, se crea como NaN)
-    if "year" not in df.columns:
+    if "Year" not in df.columns:
         if "date" in df.columns:
-            df["year"] = pd.to_datetime(
+            df["Year"] = pd.to_datetime(
                 df["date"], errors="coerce"
             ).dt.year
         else:
-            df["year"] = np.nan
-            print("  Columna 'year' no encontrada. Se requiere verificación manual.")
+            df["Year"] = np.nan
+            print("  Columna 'Year' no encontrada. Se requiere verificación manual.")
 
     return df
 
@@ -832,7 +832,7 @@ def print_eda_conclusions() -> None:
 
   4. EXPANSIÓN DEL TORNEO
      Desde 1998 hay 64 partidos por Copa (32 equipos). Los modelos
-     deben considerar la variable 'year' para no mezclar eras con
+     deben considerar la variable 'Year' para no mezclar eras con
      estructuras de torneo muy diferentes.
 
   5. DATOS PARA K-MEANS

@@ -18,9 +18,11 @@ models/*.joblib
 
 # Outputs y visualizaciones generadas
 outputs/eda_plots/*.png
+outputs/phase2/*.png
 outputs/eda_plots/*.html
 outputs/eda_plots/*.pdf
-matches_enriched_phase1.csv
+
+outputs/*.csv
 
 # Archivos de caché de Python
 __pycache__/
