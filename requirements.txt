@@ -1,0 +1,30 @@
+# ============================================================
+# REQUISITOS DEL PROYECTO
+# Copa Mundial FIFA — Machine Learning UPTC
+# ============================================================
+
+# Kaggle API (Descargar datasets directamente desde Kaggle)
+kaggle>=1.5.0
+
+# Manipulación de datos
+pandas>=2.0.0
+numpy>=1.24.0
+
+# Visualización
+matplotlib>=3.7.0
+seaborn>=0.12.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+
+# Serialización
+joblib>=1.3.0
+
+# API
+fastapi>=0.110.0
+uvicorn[standard]>=0.29.0
+pydantic>=2.0.0
+
+# Notebooks (opcional)
+jupyter>=1.0.0
+ipykernel>=6.0.0
