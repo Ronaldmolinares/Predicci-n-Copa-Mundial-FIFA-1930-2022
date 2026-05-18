@@ -122,8 +122,8 @@ if "home_team" in df_matches.columns:
     print(f"\n   Total de selecciones únicas en el dataset: {len(teams)}")
 
 # Torneos (años)
-if "year" in df_matches.columns:
-    years = sorted(df_matches["year"].dropna().unique())
+if "Year" in df_matches.columns:
+    years = sorted(df_matches["Year"].dropna().unique())
     print(f"\n   Torneos disponibles ({len(years)} ediciones): {[int(y) for y in years]}")
 
 # ---------------------------------------------------------------------------

@@ -3,6 +3,10 @@
 venv/
 env/
 
+# Archivos de Python compilados y caché
+__pycache__/
+*.pyc
+
 # Datos (Archivos pesados de Kaggle que no deben subirse al repositorio)
 data/*.csv
 data/*.zip
@@ -16,6 +20,7 @@ models/*.joblib
 outputs/eda_plots/*.png
 outputs/eda_plots/*.html
 outputs/eda_plots/*.pdf
+matches_enriched_phase1.csv
 
 # Archivos de caché de Python
 __pycache__/
