@@ -1,0 +1,285 @@
+{
+  "project": "Copa Mundial FIFA 1930–2022 — ML Predicción",
+  "phase": "Fase 3 — Modelado Supervisado Random Forest",
+  "model": "RandomForestClassifier",
+  "class_weight": "balanced",
+  "random_state": 42,
+  "classes": [
+    "away_win",
+    "draw",
+    "home_win"
+  ],
+  "baseline": {
+    "train": {
+      "split": "train",
+      "accuracy": 1.0,
+      "precision_w": 1.0,
+      "recall_w": 1.0,
+      "f1_weighted": 1.0,
+      "f1_macro": 1.0,
+      "f1_per_class": {
+        "away_win": 1.0,
+        "draw": 1.0,
+        "home_win": 1.0
+      },
+      "confusion_matrix": [
+        [
+          173,
+          0,
+          0
+        ],
+        [
+          0,
+          186,
+          0
+        ],
+        [
+          0,
+          0,
+          477
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n    away_win       1.00      1.00      1.00       173\n        draw       1.00      1.00      1.00       186\n    home_win       1.00      1.00      1.00       477\n\n    accuracy                           1.00       836\n   macro avg       1.00      1.00      1.00       836\nweighted avg       1.00      1.00      1.00       836\n"
+    },
+    "test": {
+      "split": "test",
+      "accuracy": 0.53125,
+      "precision_w": 0.486226663961039,
+      "recall_w": 0.53125,
+      "f1_weighted": 0.48665437734082395,
+      "f1_macro": 0.42755159946171184,
+      "f1_per_class": {
+        "away_win": 0.5168539325842697,
+        "draw": 0.11428571428571428,
+        "home_win": 0.6515151515151515
+      },
+      "confusion_matrix": [
+        [
+          23,
+          3,
+          19
+        ],
+        [
+          11,
+          2,
+          15
+        ],
+        [
+          10,
+          2,
+          43
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n    away_win       0.52      0.51      0.52        45\n        draw       0.29      0.07      0.11        28\n    home_win       0.56      0.78      0.65        55\n\n    accuracy                           0.53       128\n   macro avg       0.46      0.45      0.43       128\nweighted avg       0.49      0.53      0.49       128\n"
+    },
+    "oob_score": 0.5992822966507177
+  },
+  "tuned": {
+    "best_params": {
+      "classifier__max_depth": null,
+      "classifier__max_features": "sqrt",
+      "classifier__min_samples_leaf": 4,
+      "classifier__min_samples_split": 2,
+      "classifier__n_estimators": 300
+    },
+    "best_cv_score": 0.5015349303268556,
+    "train": {
+      "split": "train",
+      "accuracy": 0.8624401913875598,
+      "precision_w": 0.8701581175563402,
+      "recall_w": 0.8624401913875598,
+      "f1_weighted": 0.8641495432693846,
+      "f1_macro": 0.8482236778285367,
+      "f1_per_class": {
+        "away_win": 0.804177545691906,
+        "draw": 0.8484848484848485,
+        "home_win": 0.8920086393088553
+      },
+      "confusion_matrix": [
+        [
+          154,
+          0,
+          19
+        ],
+        [
+          15,
+          154,
+          17
+        ],
+        [
+          41,
+          23,
+          413
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n    away_win       0.73      0.89      0.80       173\n        draw       0.87      0.83      0.85       186\n    home_win       0.92      0.87      0.89       477\n\n    accuracy                           0.86       836\n   macro avg       0.84      0.86      0.85       836\nweighted avg       0.87      0.86      0.86       836\n"
+    },
+    "test": {
+      "split": "test",
+      "accuracy": 0.4921875,
+      "precision_w": 0.5138882959547663,
+      "recall_w": 0.4921875,
+      "f1_weighted": 0.49228962602690257,
+      "f1_macro": 0.4567121061659294,
+      "f1_per_class": {
+        "away_win": 0.5471698113207547,
+        "draw": 0.2545454545454545,
+        "home_win": 0.5684210526315789
+      },
+      "confusion_matrix": [
+        [
+          29,
+          8,
+          8
+        ],
+        [
+          16,
+          7,
+          5
+        ],
+        [
+          16,
+          12,
+          27
+        ]
+      ],
+      "classification_report": "              precision    recall  f1-score   support\n\n    away_win       0.48      0.64      0.55        45\n        draw       0.26      0.25      0.25        28\n    home_win       0.68      0.49      0.57        55\n\n    accuracy                           0.49       128\n   macro avg       0.47      0.46      0.46       128\nweighted avg       0.51      0.49      0.49       128\n"
+    }
+  },
+  "cross_validation": {
+    "accuracy": {
+      "train_mean": 1.0,
+      "val_mean": 0.543884892086331,
+      "val_std": 0.08616290602348127
+    },
+    "f1_macro": {
+      "train_mean": 1.0,
+      "val_mean": 0.3370478834177379,
+      "val_std": 0.05982835666767378
+    },
+    "f1_weighted": {
+      "train_mean": 1.0,
+      "val_mean": 0.45827574362947077,
+      "val_std": 0.07366184929407436
+    },
+    "precision_macro": {
+      "train_mean": 1.0,
+      "val_mean": 0.35185472036969323,
+      "val_std": 0.0934923561959924
+    },
+    "recall_macro": {
+      "train_mean": 1.0,
+      "val_mean": 0.382173232998681,
+      "val_std": 0.038310780425521884
+    }
+  },
+  "feature_importance_top20": [
+    {
+      "feature": "Year",
+      "importance": 0.0891557394499658,
+      "std": 0.06658102029471755
+    },
+    {
+      "feature": "away_hist_matches",
+      "importance": 0.06445440401617938,
+      "std": 0.05493689375427419
+    },
+    {
+      "feature": "home_hist_avg_gf",
+      "importance": 0.057680943723340865,
+      "std": 0.04350646473390091
+    },
+    {
+      "feature": "delta_wc_exp",
+      "importance": 0.0525476075129928,
+      "std": 0.04731406760084957
+    },
+    {
+      "feature": "home_hist_avg_gd",
+      "importance": 0.0513087777734905,
+      "std": 0.03981411321672455
+    },
+    {
+      "feature": "delta_win_rate",
+      "importance": 0.05125763884188784,
+      "std": 0.040227175093156556
+    },
+    {
+      "feature": "delta_avg_gd",
+      "importance": 0.05037449107723557,
+      "std": 0.040874520825819625
+    },
+    {
+      "feature": "delta_avg_gf",
+      "importance": 0.049474014899391225,
+      "std": 0.038674046641107566
+    },
+    {
+      "feature": "away_wc_appearances",
+      "importance": 0.04584738915484666,
+      "std": 0.0427301430388151
+    },
+    {
+      "feature": "away_hist_avg_gf",
+      "importance": 0.04046951314717392,
+      "std": 0.03191058638808072
+    },
+    {
+      "feature": "home_hist_win_rate",
+      "importance": 0.04019484970740024,
+      "std": 0.03003776856905597
+    },
+    {
+      "feature": "away_hist_avg_gd",
+      "importance": 0.03953318635509878,
+      "std": 0.030845602742422925
+    },
+    {
+      "feature": "home_hist_avg_ga",
+      "importance": 0.03727561912814705,
+      "std": 0.027675818438464065
+    },
+    {
+      "feature": "away_hist_draw_rate",
+      "importance": 0.037051895379216555,
+      "std": 0.028455823615878766
+    },
+    {
+      "feature": "away_hist_avg_ga",
+      "importance": 0.03687799366108189,
+      "std": 0.027093510878333654
+    },
+    {
+      "feature": "home_hist_matches",
+      "importance": 0.03557603955209361,
+      "std": 0.026995993967357867
+    },
+    {
+      "feature": "away_hist_win_rate",
+      "importance": 0.03412677610734437,
+      "std": 0.02656221004460964
+    },
+    {
+      "feature": "home_hist_draw_rate",
+      "importance": 0.03171212967834136,
+      "std": 0.025232921070262232
+    },
+    {
+      "feature": "home_wc_appearances",
+      "importance": 0.028726832677328656,
+      "std": 0.02531488257745661
+    },
+    {
+      "feature": "away_recent_win_rate",
+      "importance": 0.021903000751746983,
+      "std": 0.020742693658969167
+    }
+  ],
+  "anti_leakage_notes": [
+    "Preprocessor ajustado SOLO sobre X_train (Fase 2)",
+    "X_test solo usa .transform() nunca .fit_transform()",
+    "TimeSeriesSplit en CV y GridSearchCV",
+    "Features históricas calculadas con expanding().mean().shift(1)",
+    "home_score/away_score/xg excluidos de features"
+  ]
+}
