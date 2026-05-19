@@ -1,0 +1,398 @@
+{
+  "project": "Copa Mundial FIFA 1930–2022 — ML Predicción",
+  "phase": "Fase 4 — Clustering K-Means",
+  "model": "KMeans",
+  "optimal_k": 11,
+  "silhouette_score": 0.281352905653364,
+  "k_evaluation": [
+    {
+      "k": 2,
+      "inertia": 504.61517271450276,
+      "silhouette": 0.33237856655126846,
+      "calinski": 59.15859670131518,
+      "davies": 1.046885619469443
+    },
+    {
+      "k": 3,
+      "inertia": 322.02137380943185,
+      "silhouette": 0.37085792289838565,
+      "calinski": 69.3311525343684,
+      "davies": 0.9091642303100885
+    },
+    {
+      "k": 4,
+      "inertia": 266.3604600251241,
+      "silhouette": 0.3376592025998215,
+      "calinski": 60.91800346211081,
+      "davies": 1.0028579348964741
+    },
+    {
+      "k": 5,
+      "inertia": 230.35119542724357,
+      "silhouette": 0.27492965796009433,
+      "calinski": 55.35195191390066,
+      "davies": 1.159939297711071
+    },
+    {
+      "k": 6,
+      "inertia": 205.83799594640342,
+      "silhouette": 0.25653506510726726,
+      "calinski": 50.84868814785226,
+      "davies": 1.1551793496196001
+    },
+    {
+      "k": 7,
+      "inertia": 184.1749571687831,
+      "silhouette": 0.2659827832180281,
+      "calinski": 48.314728564262104,
+      "davies": 1.079292721370367
+    },
+    {
+      "k": 8,
+      "inertia": 164.92642248034008,
+      "silhouette": 0.25808992968929856,
+      "calinski": 46.960974849251095,
+      "davies": 1.0789942344077863
+    },
+    {
+      "k": 9,
+      "inertia": 150.37569117714602,
+      "silhouette": 0.25266636680348825,
+      "calinski": 45.42046602714474,
+      "davies": 1.0747712833712024
+    },
+    {
+      "k": 10,
+      "inertia": 135.2687184653449,
+      "silhouette": 0.2730959981937742,
+      "calinski": 45.242929137665485,
+      "davies": 1.047360332542502
+    },
+    {
+      "k": 11,
+      "inertia": 127.70624082986487,
+      "silhouette": 0.281352905653364,
+      "calinski": 43.00653717536746,
+      "davies": 1.004449035815526
+    },
+    {
+      "k": 12,
+      "inertia": 118.2296791525031,
+      "silhouette": 0.2725928007249111,
+      "calinski": 42.20675624858157,
+      "davies": 1.0648781674447674
+    }
+  ],
+  "clusters": {
+    "0": {
+      "label": "Élite Mundial",
+      "n_teams": 9,
+      "teams": [
+        "Bolivia",
+        "China Pr",
+        "Dutch East Indies",
+        "El Salvador",
+        "Haiti",
+        "Panama",
+        "Serbia And Montenegro",
+        "United Arab Emirates",
+        "Zaire"
+      ],
+      "silhouette_mean": 0.2723850250754138,
+      "centroid": {
+        "total_matches": 3.444444444444443,
+        "win_rate": 1.1102230246251565e-16,
+        "draw_rate": 0.018518518518518517,
+        "loss_rate": 0.9814814814814814,
+        "avg_goals_for": 0.33333333333333337,
+        "avg_goals_against": 4.0,
+        "avg_goal_diff": -3.6666666666666665,
+        "num_tournaments": 1.333333333333334,
+        "best_stage": 1.1111111111111112,
+        "goals_per_tournament": 0.9814814814814814
+      }
+    },
+    "1": {
+      "label": "Potencia Regional",
+      "n_teams": 14,
+      "teams": [
+        "Colombia",
+        "Denmark",
+        "Ecuador",
+        "Fr Yugoslavia",
+        "Germany Dr",
+        "Ghana",
+        "Northern Ireland",
+        "Norway",
+        "Romania",
+        "Russia",
+        "Senegal",
+        "Slovakia",
+        "South Africa",
+        "Ukraine"
+      ],
+      "silhouette_mean": 0.19513216098229683,
+      "centroid": {
+        "total_matches": 12.071428571428571,
+        "win_rate": 0.3420001496088452,
+        "draw_rate": 0.26873443154499055,
+        "loss_rate": 0.38926541884616417,
+        "avg_goals_for": 1.2132886178693632,
+        "avg_goals_against": 1.3667251313214046,
+        "avg_goal_diff": -0.15343651345204146,
+        "num_tournaments": 3.3571428571428577,
+        "best_stage": 2.5,
+        "goals_per_tournament": 4.603741496598639
+      }
+    },
+    "2": {
+      "label": "Competitivo Estable",
+      "n_teams": 10,
+      "teams": [
+        "Argentina",
+        "Brazil",
+        "England",
+        "France",
+        "Germany",
+        "Italy",
+        "Netherlands",
+        "Spain",
+        "Uruguay",
+        "West Germany"
+      ],
+      "silhouette_mean": 0.2912252241503963,
+      "centroid": {
+        "total_matches": 72.49999999999999,
+        "win_rate": 0.535576089869503,
+        "draw_rate": 0.22055544331362456,
+        "loss_rate": 0.24386846681687246,
+        "avg_goals_for": 1.7625534437518455,
+        "avg_goals_against": 1.0780530712894234,
+        "avg_goal_diff": 0.6845003724624221,
+        "num_tournaments": 15.1,
+        "best_stage": 6.0,
+        "goals_per_tournament": 8.639502164502165
+      }
+    },
+    "3": {
+      "label": "Emergente / Irregular",
+      "n_teams": 6,
+      "teams": [
+        "Egypt",
+        "Honduras",
+        "Iceland",
+        "Kuwait",
+        "New Zealand",
+        "Trinidad And Tobago"
+      ],
+      "silhouette_mean": 0.43779114734415786,
+      "centroid": {
+        "total_matches": 5.166666666666668,
+        "win_rate": 5.551115123125783e-17,
+        "draw_rate": 0.35317460317460314,
+        "loss_rate": 0.6468253968253967,
+        "avg_goals_for": 0.507936507936508,
+        "avg_goals_against": 1.7671957671957672,
+        "avg_goal_diff": -1.259259259259259,
+        "num_tournaments": 1.833333333333334,
+        "best_stage": 1.1666666666666665,
+        "goals_per_tournament": 1.444444444444445
+      }
+    },
+    "4": {
+      "label": "Participante Ocasional",
+      "n_teams": 11,
+      "teams": [
+        "Algeria",
+        "Australia",
+        "Costa Rica",
+        "Greece",
+        "Ir Iran",
+        "Japan",
+        "Nigeria",
+        "Peru",
+        "Saudi Arabia",
+        "Scotland",
+        "Tunisia"
+      ],
+      "silhouette_mean": 0.25443648893233084,
+      "centroid": {
+        "total_matches": 18.727272727272727,
+        "win_rate": 0.22524984296151346,
+        "draw_rate": 0.21163629657908833,
+        "loss_rate": 0.5631138604593983,
+        "avg_goals_for": 0.907574766956918,
+        "avg_goals_against": 1.7286955378717392,
+        "avg_goal_diff": -0.8211207709148213,
+        "num_tournaments": 5.7272727272727275,
+        "best_stage": 1.909090909090909,
+        "goals_per_tournament": 2.9981601731601732
+      }
+    },
+    "5": {
+      "label": "Debutante / Histórico",
+      "n_teams": 4,
+      "teams": [
+        "Canada",
+        "Iraq",
+        "Qatar",
+        "Togo"
+      ],
+      "silhouette_mean": 0.7372665010932187,
+      "centroid": {
+        "total_matches": 3.7499999999999964,
+        "win_rate": 0.0,
+        "draw_rate": 0.0,
+        "loss_rate": 1.0,
+        "avg_goals_for": 0.33333333333333326,
+        "avg_goals_against": 1.9166666666666667,
+        "avg_goal_diff": -1.5833333333333335,
+        "num_tournaments": 1.2500000000000009,
+        "best_stage": 1.0,
+        "goals_per_tournament": 0.9999999999999996
+      }
+    },
+    "6": {
+      "label": "Cluster 6",
+      "n_teams": 11,
+      "teams": [
+        "Austria",
+        "Belgium",
+        "Croatia",
+        "Czechoslovakia",
+        "Hungary",
+        "Poland",
+        "Portugal",
+        "Soviet Union",
+        "Sweden",
+        "Türkiye",
+        "Yugoslavia"
+      ],
+      "silhouette_mean": 0.28919303953212955,
+      "centroid": {
+        "total_matches": 33.63636363636364,
+        "win_rate": 0.4370957206990681,
+        "draw_rate": 0.17736251522378343,
+        "loss_rate": 0.38554176407714846,
+        "avg_goals_for": 1.6756138328390735,
+        "avg_goals_against": 1.403728373430666,
+        "avg_goal_diff": 0.2718854594084077,
+        "num_tournaments": 8.181818181818182,
+        "best_stage": 5.363636363636363,
+        "goals_per_tournament": 7.053391053391053
+      }
+    },
+    "7": {
+      "label": "Cluster 7",
+      "n_teams": 4,
+      "teams": [
+        "Angola",
+        "Israel",
+        "Republic Of Ireland",
+        "Wales"
+      ],
+      "silhouette_mean": 0.41336931154720663,
+      "centroid": {
+        "total_matches": 6.7499999999999964,
+        "win_rate": 0.06971153846153849,
+        "draw_rate": 0.6121794871794871,
+        "loss_rate": 0.31810897435897434,
+        "avg_goals_for": 0.5152243589743589,
+        "avg_goals_against": 0.921474358974359,
+        "avg_goal_diff": -0.40625,
+        "num_tournaments": 1.7500000000000004,
+        "best_stage": 2.0,
+        "goals_per_tournament": 1.9583333333333335
+      }
+    },
+    "8": {
+      "label": "Cluster 8",
+      "n_teams": 9,
+      "teams": [
+        "Bulgaria",
+        "Cameroon",
+        "Chile",
+        "Korea Republic",
+        "Mexico",
+        "Morocco",
+        "Paraguay",
+        "Switzerland",
+        "United States"
+      ],
+      "silhouette_mean": 0.16261222005333473,
+      "centroid": {
+        "total_matches": 34.55555555555556,
+        "win_rate": 0.2411029691288043,
+        "draw_rate": 0.26963556512619163,
+        "loss_rate": 0.48926146574500406,
+        "avg_goals_for": 1.0408109834948407,
+        "avg_goals_against": 1.6902843647589483,
+        "avg_goal_diff": -0.6494733812641077,
+        "num_tournaments": 9.88888888888889,
+        "best_stage": 3.9999999999999996,
+        "goals_per_tournament": 3.648093917701761
+      }
+    },
+    "9": {
+      "label": "Cluster 9",
+      "n_teams": 3,
+      "teams": [
+        "Cuba",
+        "Jamaica",
+        "Korea Dpr"
+      ],
+      "silhouette_mean": -0.014806066076756776,
+      "centroid": {
+        "total_matches": 4.333333333333332,
+        "win_rate": 0.2698412698412698,
+        "draw_rate": 0.15873015873015872,
+        "loss_rate": 0.5714285714285714,
+        "avg_goals_for": 1.1746031746031746,
+        "avg_goals_against": 3.333333333333333,
+        "avg_goal_diff": -2.158730158730159,
+        "num_tournaments": 1.333333333333334,
+        "best_stage": 2.333333333333333,
+        "goals_per_tournament": 3.666666666666667
+      }
+    },
+    "10": {
+      "label": "Cluster 10",
+      "n_teams": 5,
+      "teams": [
+        "Bosnia And Herzegovina",
+        "Czech Republic",
+        "Côte D'Ivoire",
+        "Serbia",
+        "Slovenia"
+      ],
+      "silhouette_mean": 0.29449508705380134,
+      "centroid": {
+        "total_matches": 6.0,
+        "win_rate": 0.2777777777777778,
+        "draw_rate": 0.07777777777777778,
+        "loss_rate": 0.6444444444444444,
+        "avg_goals_for": 1.1222222222222222,
+        "avg_goals_against": 1.511111111111111,
+        "avg_goal_diff": -0.38888888888888895,
+        "num_tournaments": 2.0,
+        "best_stage": 1.0,
+        "goals_per_tournament": 3.3666666666666667
+      }
+    }
+  },
+  "cluster_label_map": {
+    "0": "Élite Mundial",
+    "1": "Potencia Regional",
+    "2": "Competitivo Estable",
+    "3": "Emergente / Irregular",
+    "4": "Participante Ocasional",
+    "5": "Debutante / Histórico"
+  },
+  "methodology": {
+    "scaling": "StandardScaler (media=0, std=1)",
+    "init": "k-means++",
+    "n_init": 20,
+    "k_selection": "Silhouette Score + Elbow Method",
+    "visualization": "PCA 2D + t-SNE 2D"
+  }
+}
