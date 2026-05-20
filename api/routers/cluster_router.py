@@ -1,26 +1,39 @@
 from fastapi import APIRouter, HTTPException
-from api.schemas import TeamStats, ClusterResponse
+from api.schemas import ClusterRequest, TeamStats, ClusterResponse
 from api.ml_service import ml_service
 
 router = APIRouter(prefix="/api/v1/cluster", tags=["Clustering de Equipos"])
 
 @router.post("/team", response_model=ClusterResponse)
-def predict_cluster(stats: TeamStats):
+def predict_cluster(request: ClusterRequest):
     """
-    Recibe las estadísticas históricas agregadas de un equipo y,
-    utilizando el modelo KMeans, determina a qué clúster pertenece.
-    
-    Devuelve el ID numérico del clúster y su etiqueta descriptiva.
+    Recibe el nombre de un equipo y un año.
+    Calcula dinámicamente sus 10 estadísticas históricas acumuladas
+    hasta ese momento y lo asigna a un clúster usando KMeans.
     """
     try:
-        cluster_id, label = ml_service.predict_cluster(stats)
+        cluster_id, label = ml_service.predict_cluster(request, debug=True)
         return ClusterResponse(
             cluster_id=cluster_id,
             cluster_label=label
         )
+    except ValueError as ve:
+        raise HTTPException(status_code=400, detail=str(ve))
     except RuntimeError as re:
-        # Error si los modelos no están cargados
         raise HTTPException(status_code=503, detail=str(re))
     except Exception as e:
-        # Cualquier otro error
         raise HTTPException(status_code=500, detail=f"Error interno durante el clustering: {str(e)}")
+
+@router.post("/team/raw", response_model=ClusterResponse)
+def predict_cluster_raw(stats: TeamStats):
+    """
+    (Endpoint Técnico/Debug) Recibe las 10 features ya pre-calculadas manualmente.
+    """
+    try:
+        cluster_id, label = ml_service.predict_cluster_raw(stats)
+        return ClusterResponse(
+            cluster_id=cluster_id,
+            cluster_label=label
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error interno durante el clustering raw: {str(e)}")

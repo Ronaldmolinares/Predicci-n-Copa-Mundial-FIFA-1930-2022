@@ -26,7 +26,18 @@ class MatchPredictionResponse(BaseModel):
 # Esquemas para K-Means (Modelo No Supervisado)
 # ---------------------------------------------------------
 
+class ClusterRequest(BaseModel):
+    """
+    Datos de entrada naturales enviados por el usuario final para agrupar un equipo.
+    La API calculará internamente las estadísticas acumuladas hasta ese año.
+    """
+    team: str = Field(..., example="Colombia", description="Nombre histórico exacto del equipo")
+    year: int = Field(..., example=2022, description="Año hasta el cual se evaluará el rendimiento")
+
 class TeamStats(BaseModel):
+    """
+    (Endpoint técnico) 10 features crudas.
+    """
     total_matches: int
     win_rate: float
     draw_rate: float

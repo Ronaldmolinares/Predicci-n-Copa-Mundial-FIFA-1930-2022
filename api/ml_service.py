@@ -1,7 +1,7 @@
 import joblib
 import pandas as pd
 from api.utils import RF_MODEL_PATH, KMEANS_MODEL_PATH, CLUSTER_LABELS, load_metadata, load_historical_data
-from api.schemas import MatchRequest, TeamStats
+from api.schemas import MatchRequest, TeamStats, ClusterRequest
 from api.feature_builder import FeatureBuilder
 
 class MLService:
@@ -61,7 +61,24 @@ class MLService:
             
         return predicted_class_name, proba_dict
 
-    def predict_cluster(self, stats: TeamStats):
+    def predict_cluster(self, request: ClusterRequest, debug: bool = False):
+        if not self.is_ready:
+            raise RuntimeError("Los modelos no están listos.")
+        
+        # Feature Engineering para KMeans
+        features_dict = self.feature_builder.build_cluster_features(
+            team=request.team,
+            year=request.year,
+            debug=debug
+        )
+        
+        df = pd.DataFrame([features_dict])
+        cluster_id = int(self.kmeans_model.predict(df)[0])
+        label = CLUSTER_LABELS.get(cluster_id, "Desconocido")
+        return cluster_id, label
+
+    def predict_cluster_raw(self, stats: TeamStats):
+        """Endpoint técnico directo."""
         if not self.is_ready:
             raise RuntimeError("Los modelos no están listos.")
         
