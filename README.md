@@ -32,19 +32,19 @@ fifa_ml_project/
 │   └── evaluate.py                ← Métricas y evaluación [FASE 5]
 │
 ├── notebooks/                     ← Scripts ejecutables por fase
-│   ├── fase_1_eda.py              ← ✅ FASE 1 (actual)
-│   ├── fase_2_preprocessing.py    ← [pendiente]
-│   ├── fase_3_supervised.py       ← [pendiente]
-│   ├── fase_4_unsupervised.py     ← [pendiente]
-│   └── fase_5_evaluation.py       ← [pendiente]
+│   ├── fase_1_eda.py              ← FASE 1: EDA
+│   ├── fase_2_preprocessing.py    ← FASE 2: Preprocesamiento
+│   ├── fase_3_supervised.py       ← FASE 3: Random Forest
+│   ├── fase_4_unsupervised.py     ← FASE 4: K-Means
+│   └── fase_5_evaluation.py       ← FASE 5: Evaluación
 │
 ├── models/                        ← Modelos serializados
-│   ├── random_forest_pipeline.pkl ← [Fase 3]
-│   └── metadata.json              ← [Fase 3]
+│   ├── random_forest_pipeline.pkl ← Random Forest
+│   └── metadata.json              ← Metadata
 │
 ├── api/                           ← FastAPI REST service
-│   ├── main.py                    ← [Fase 6]
-│   └── schemas.py                 ← [Fase 6]
+│   ├── main.py                    ← API REST
+│   └── schemas.py                 ← Esquemas
 │
 ├── outputs/
 │   └── eda_plots/                 ← Visualizaciones generadas
@@ -57,14 +57,14 @@ fifa_ml_project/
 
 ##  Fases del Proyecto (CRISP-DM)
 
-| Fase | Descripción | Estado |
-|------|-------------|--------|
-| 1 | Comprensión de Datos + EDA |  Completada |
-| 2 | Preparación de Datos + Feature Engineering |  Pendiente |
-| 3 | Modelado Supervisado (Random Forest) |  Pendiente |
-| 4 | Modelado No Supervisado (K-Means) |  Pendiente |
-| 5 | Evaluación Integral |  Pendiente |
-| 6 | Despliegue (FastAPI) |  Pendiente |
+| Fase | Descripción 
+|------|-------------|
+| 1 | Comprensión de Datos + EDA 
+| 2 | Preparación de Datos + Feature Engineering 
+| 3 | Modelado Supervisado (Random Forest) 
+| 4 | Modelado No Supervisado (K-Means) 
+| 5 | Evaluación Integral 
+| 6 | Despliegue (FastAPI) | 
 
 ---
 
@@ -85,6 +85,35 @@ pip install -r requirements.txt
 
 # 2. Ejecuta:
 python notebooks/fase_1_eda.py
+```
+
+---
+
+## Ejecución de Fases
+
+1. **Fase 1: EDA**
+```bash
+python notebooks/fase_1_eda.py
+```
+
+2. **Fase 2: Preprocesamiento**
+```bash
+python notebooks/fase_2_preprocessing.py
+```
+
+3. **Fase 3: Random Forest**
+```bash
+python notebooks/fase_3_supervised.py
+```
+
+4. **Fase 4: K-Means**
+```bash
+python notebooks/fase_4_unsupervised.py
+```
+
+5. **Fase 5: Evaluación**
+```bash
+python notebooks/fase_5_evaluation.py
 ```
 
 ---
