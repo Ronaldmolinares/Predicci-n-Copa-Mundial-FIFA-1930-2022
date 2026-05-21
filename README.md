@@ -1,4 +1,4 @@
-# ⚽ Predicción Copa Mundial FIFA 1930–2022
+#  Predicción Copa Mundial FIFA 1930–2022
 ### Machine Learning Aplicado — ELECTIVA II
 **Universidad Pedagógica y Tecnológica de Colombia (UPTC)**
 Facultad de Ingeniería — Ingeniería de Sistemas y Computación
@@ -125,3 +125,21 @@ python notebooks/fase_5_evaluation.py
 - **Cobertura:** 22 ediciones de la Copa Mundial (1930–2022)
 - **Metodología:** CRISP-DM
 - **Stack:** Python · Pandas · Scikit-learn · FastAPI · Joblib · Pydantic
+
+---
+
+## Interfaz gráfica (Tkinter)
+
+Se agregó una interfaz básica para orquestar la carga, preprocesamiento,
+entrenamiento y exportación de artefactos.
+
+Ejecutar:
+
+```bash
+python gui/app.py
+```
+
+La GUI permite:
+- Cargar el CSV de partidos (o usar `data/matches_1930_2022.csv`).
+- Ejecutar preprocesamiento (Fase 2) y generar artefactos en `models/` y `outputs/`.
+- Entrenar un Random Forest baseline y ejecutar K-Means (guardando resultados).
