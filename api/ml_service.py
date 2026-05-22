@@ -1,7 +1,7 @@
 import joblib
 import pandas as pd
 from api.utils import RF_MODEL_PATH, KMEANS_MODEL_PATH, CLUSTER_LABELS, load_metadata, load_historical_data
-from api.schemas import MatchRequest, TeamStats, ClusterRequest
+from api.schemas import MatchRequest, TeamStats, ClusterRequest, MatchFeaturesRaw
 from api.feature_builder import FeatureBuilder
 
 class MLService:
@@ -86,5 +86,31 @@ class MLService:
         cluster_id = int(self.kmeans_model.predict(df)[0])
         label = CLUSTER_LABELS.get(cluster_id, "Desconocido")
         return cluster_id, label
+
+    def predict_match_raw(self, features: MatchFeaturesRaw):
+        """Endpoint técnico directo para predicción de partidos con features pre-calculadas."""
+        if not self.is_ready:
+            raise RuntimeError("Los modelos no están listos.")
+        
+        # Convertir el esquema a diccionario y luego a DataFrame
+        features_dict = features.model_dump()
+        df = pd.DataFrame([features_dict])
+        
+        # Predicción raw
+        pred_raw = self.rf_model.predict(df)[0]
+        proba_raw = self.rf_model.predict_proba(df)[0]
+        
+        # Mapeo de salida usando target_mapping de metadatos
+        target_mapping = self.metadata.get("target_mapping", {})
+        predicted_class_name = target_mapping.get(str(pred_raw), str(pred_raw))
+        
+        # Mapeo de probabilidades
+        classes_raw = self.rf_model.classes_
+        proba_dict = {}
+        for c, p in zip(classes_raw, proba_raw):
+            class_name = target_mapping.get(str(c), str(c))
+            proba_dict[class_name] = float(p)
+            
+        return predicted_class_name, proba_dict
 
 ml_service = MLService()

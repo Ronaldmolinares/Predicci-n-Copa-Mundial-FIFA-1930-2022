@@ -4,6 +4,9 @@ import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
 import threading
 import json
+import glob
+import subprocess
+from pathlib import Path
 
 # Asegurar que el paquete `src` sea importable cuando se ejecuta
 # el script directamente (python gui/app.py). Añadimos el root del
@@ -15,7 +18,9 @@ if ROOT_DIR not in sys.path:
 import matplotlib
 matplotlib.use("TkAgg")
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.image import imread
 import matplotlib.pyplot as plt
+from PIL import Image
 
 from src import data_loader, feature_engineering, preprocessing, model_supervised, kmeans_modeling
 
@@ -37,6 +42,10 @@ class App(tk.Tk):
         self.X_test = None
         self.y_test = None
         self.preprocessor = None
+        
+        # Variables para navegación de imágenes
+        self.image_files = []
+        self.current_image_index = 0
 
     def create_widgets(self):
         frm = ttk.Frame(self, style="Content.TFrame")
@@ -91,9 +100,22 @@ class App(tk.Tk):
         self.log = tk.Text(log_frame, wrap="word", bg="#ffffff", fg="#1f2937", bd=1)
         self.log.pack(fill=tk.BOTH, expand=True, padx=6, pady=6)
 
-        # Área de gráficos (placeholder)
+        # Área de gráficos con controles de navegación
+        # Frame superior con botones
+        nav_frame = ttk.Frame(plot_frame)
+        nav_frame.pack(fill=tk.X, padx=6, pady=(6,2))
+        
+        ttk.Button(nav_frame, text="◄ Anterior", command=self.prev_image).pack(side=tk.LEFT, padx=2)
+        self.image_label = ttk.Label(nav_frame, text="Sin imágenes", foreground="#666666")
+        self.image_label.pack(side=tk.LEFT, expand=True, padx=10)
+        ttk.Button(nav_frame, text="Siguiente ►", command=self.next_image).pack(side=tk.RIGHT, padx=2)
+        
+        # Frame inferior con canvas
+        canvas_frame = ttk.Frame(plot_frame)
+        canvas_frame.pack(fill=tk.BOTH, expand=True, padx=6, pady=(2,6))
+        
         self.fig, self.ax = plt.subplots(figsize=(4,3))
-        self.canvas = FigureCanvasTkAgg(self.fig, master=plot_frame)
+        self.canvas = FigureCanvasTkAgg(self.fig, master=canvas_frame)
         self.canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
         # Progress bar
@@ -135,8 +157,93 @@ class App(tk.Tk):
         style.configure('Accent.Horizontal.TProgressbar', troughcolor='#e6f6e9', background=primary)
 
     def append_log(self, text: str):
-        self.log.insert(tk.END, text + "\n")
-        self.log.see(tk.END)
+        """Añade texto al log de forma segura desde cualquier thread."""
+        def add_text():
+            self.log.insert(tk.END, text + "\n")
+            self.log.see(tk.END)
+        
+        # Usar after() para asegurar que se ejecuta en el thread principal
+        self.after(0, add_text)
+
+    def display_plot(self, title: str = "Visualización"):
+        """Limpia el canvas y prepara una nueva gráfica."""
+        self.fig.clear()
+        self.ax = self.fig.add_subplot(111)
+        self.ax.set_title(title)
+        self.canvas.draw()
+
+    def load_and_display_image(self, index: int = 0):
+        """Carga y muestra una imagen PNG en el canvas según el índice."""
+        if not self.image_files or index < 0 or index >= len(self.image_files):
+            self.image_label.config(text="Sin imágenes")
+            return
+        
+        self.current_image_index = index
+        image_path = self.image_files[index]
+        
+        try:
+            img = Image.open(image_path)
+            
+            # Limpiar figura anterior
+            self.fig.clear()
+            ax = self.fig.add_subplot(111)
+            
+            # Mostrar imagen
+            ax.imshow(img)
+            ax.axis('off')
+            
+            # Título del archivo
+            filename = os.path.basename(image_path)
+            ax.set_title(filename, fontsize=10, pad=10)
+            
+            self.fig.tight_layout()
+            
+            # Usar after() para actualizar desde el thread principal
+            def update_canvas():
+                self.canvas.draw()
+                # Actualizar etiqueta de navegación
+                counter_text = f"{index + 1} / {len(self.image_files)}"
+                self.image_label.config(text=counter_text)
+                self.append_log(f"Gráfica mostrada: {filename}")
+            
+            self.after(100, update_canvas)
+            
+        except Exception as e:
+            self.append_log(f"Error cargando imagen {image_path}: {e}")
+
+    def next_image(self):
+        """Muestra la siguiente imagen."""
+        if self.image_files:
+            next_index = (self.current_image_index + 1) % len(self.image_files)
+            self.load_and_display_image(next_index)
+
+    def prev_image(self):
+        """Muestra la imagen anterior."""
+        if self.image_files:
+            prev_index = (self.current_image_index - 1) % len(self.image_files)
+            self.load_and_display_image(prev_index)
+
+    def load_outputs_visualizations(self):
+        """Intenta cargar y mostrar gráficas de outputs/."""
+        outputs_dir = "outputs"
+        if not os.path.exists(outputs_dir):
+            self.append_log("No hay carpeta outputs/ aún.")
+            self.image_files = []
+            return
+        
+        # Buscar archivos PNG en outputs (incluye subdirectorios)
+        png_files = glob.glob(os.path.join(outputs_dir, "**/*.png"), recursive=True)
+        png_files.sort()  # Ordenar alfabéticamente
+        
+        if png_files:
+            self.image_files = png_files
+            self.current_image_index = 0
+            self.append_log(f"Encontradas {len(png_files)} gráficas en outputs/")
+            # Mostrar la primera
+            self.load_and_display_image(0)
+        else:
+            self.image_files = []
+            self.append_log("No hay gráficas PNG en outputs/")
 
     def load_default(self):
         try:
@@ -208,6 +315,9 @@ class App(tk.Tk):
             profile.to_csv("outputs/kmeans_profile_phase2.csv", index=False)
 
             self.append_log("Preprocesamiento completado y artefactos guardados.")
+            
+            # Intentar cargar visualizaciones generadas
+            self.load_outputs_visualizations()
         except Exception as e:
             self.append_log(f"Error en preprocesamiento: {e}")
 
@@ -222,10 +332,14 @@ class App(tk.Tk):
             self.append_log("Entrenando RandomForest baseline...")
             res = model_supervised.train_baseline(self.X_train, self.y_train, self.X_test, self.y_test, self.preprocessor)
             import joblib
+            
+            # Guardar pipeline
             joblib.dump(res["pipeline"], "models/random_forest_pipeline.pkl")
-            # Guardar métricas y artefactos mínimos
-            fi = model_supervised.get_feature_importance(res["pipeline"]) if res.get("pipeline") is not None else None
-            model_supervised.save_phase3_artifacts(res["pipeline"], res, res, {"summary": {}}, fi, paths=None)
+            
+            # Guardar solo el modelo RF
+            rf_model = res["pipeline"].named_steps["classifier"]
+            joblib.dump(rf_model, "models/random_forest_model.pkl")
+            
             self.append_log("Entrenamiento RF completado. Artefactos guardados en models/.")
         except Exception as e:
             self.append_log(f"Error en entrenamiento RF: {e}")
@@ -246,13 +360,68 @@ class App(tk.Tk):
             km = kmeans_modeling.train_kmeans(X_sc, k_opt)
             df_clustered = kmeans_modeling.assign_clusters(self.profile_df, teams, km.labels_, km, X_sc, list(X_k.columns))
             centroids_df, labels_map = kmeans_modeling.describe_clusters(df_clustered, list(X_k.columns), km, scaler)
-            kmeans_modeling.save_phase4_artifacts(km, kmeans_modeling.build_final_kmeans_pipeline(scaler, km), df_clustered, centroids_df, labels_map, df_metrics, k_opt, float(df_metrics[df_metrics['k']==k_opt]['silhouette']))
+            silhouette_score = float(df_metrics[df_metrics['k']==k_opt]['silhouette'].iloc[0])
+            kmeans_modeling.save_phase4_artifacts(km, kmeans_modeling.build_final_kmeans_pipeline(scaler, km), df_clustered, centroids_df, labels_map, df_metrics, k_opt, silhouette_score)
             self.append_log("K-Means completado y artefactos guardados en models/ y outputs/phase4/.")
+            
+            # Intentar cargar visualizaciones generadas
+            self.load_outputs_visualizations()
         except Exception as e:
             self.append_log(f"Error en K-Means: {e}")
 
     def export_artifacts(self):
-        self.append_log("Los artefactos principales se guardan automáticamente en la carpeta models/ y outputs/.\nRevise esos directorios para los archivos generados.")
+        """Muestra un resumen de los artefactos generados y permite abrirlos."""
+        models_dir = "models"
+        outputs_dir = "outputs"
+        
+        artifacts_info = "📦 ARTEFACTOS GENERADOS\n"
+        artifacts_info += "=" * 50 + "\n\n"
+        
+        # Modelos en models/
+        if os.path.exists(models_dir):
+            model_files = glob.glob(os.path.join(models_dir, "*"))
+            if model_files:
+                artifacts_info += "📁 models/\n"
+                for f in model_files:
+                    size = os.path.getsize(f) / (1024 * 1024)  # MB
+                    artifacts_info += f"  • {os.path.basename(f)} ({size:.2f} MB)\n"
+                artifacts_info += "\n"
+        
+        # Archivos en outputs/
+        if os.path.exists(outputs_dir):
+            output_files = glob.glob(os.path.join(outputs_dir, "**/*"), recursive=True)
+            output_files = [f for f in output_files if os.path.isfile(f)]
+            
+            if output_files:
+                artifacts_info += "📁 outputs/\n"
+                for f in output_files:
+                    size = os.path.getsize(f) / (1024 * 1024)  # MB
+                    rel_path = os.path.relpath(f, outputs_dir)
+                    artifacts_info += f"  • {rel_path} ({size:.2f} MB)\n"
+        
+        self.append_log(artifacts_info)
+        
+        # Mostrar diálogo de información
+        info_msg = "✓ Los artefactos han sido generados en:\n"
+        info_msg += f"  • {os.path.abspath(models_dir)}\n"
+        info_msg += f"  • {os.path.abspath(outputs_dir)}\n\n"
+        info_msg += "Puedes revisar el registro (Log) para ver el detalle completo."
+        messagebox.showinfo("Artefactos Generados", info_msg)
+        
+        # Ofrecer abrir carpeta en explorador
+        try:
+            if os.path.exists(outputs_dir):
+                response = messagebox.askyesno("Explorador", "¿Deseas abrir la carpeta outputs/  en el explorador?")
+                if response:
+                    outputs_path = os.path.abspath(outputs_dir)
+                    if sys.platform == 'win32':
+                        os.startfile(outputs_path)
+                    elif sys.platform == 'darwin':
+                        subprocess.Popen(['open', outputs_path])
+                    else:
+                        subprocess.Popen(['xdg-open', outputs_path])
+        except Exception as e:
+            self.append_log(f"No se pudo abrir el explorador: {e}")
 
 
 def main():

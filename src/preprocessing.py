@@ -192,6 +192,18 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
         df = df[~mask_teams]
         print(f"    {n_teams} filas sin equipo eliminadas.")
 
+    # 2.5. Crear columna 'result' si no existe (derivada de scores)
+    if TARGET_COL not in df.columns and "home_score" in df.columns and "away_score" in df.columns:
+        df[TARGET_COL] = df.apply(
+            lambda row: (
+                "home_win" if row["home_score"] > row["away_score"] else
+                "away_win" if row["away_score"] > row["home_score"] else
+                "draw"
+            ),
+            axis=1
+        )
+        print(f"    Columna 'result' creada a partir de scores.")
+
     # 3. Filas sin variable objetivo
     if TARGET_COL in df.columns:
         mask_target = df[TARGET_COL].isna()
