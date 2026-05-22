@@ -76,7 +76,72 @@ pip install -r requirements.txt
 
 ---
 
-## ▶ Ejecución Fase 1
+## 🚀 Ejecución del Proyecto
+
+El proyecto ofrece **dos perfiles de usuario** con interfaces dedicadas:
+
+### 1️⃣ Modo Analista (Interfaz de Escritorio)
+
+**Ubicación:** `gui/app.py`  
+**Descripción:** Interfaz gráfica (Tkinter) exclusiva para analistas. Permite ejecutar las 5 fases del proyecto (EDA, Preprocesamiento, Modelado, Evaluación) de forma interactiva.
+
+**Pasos de Ejecución:**
+
+```bash
+# Desde la raíz del proyecto:
+cd c:\ruta\a\proyecto
+
+# Activar el entorno virtual (si no está activado)
+.venv\Scripts\Activate.ps1
+
+# Ejecutar la interfaz gráfica
+python gui/app.py
+```
+
+**Funcionalidades:**
+- ✅ Cargar dataset (CSV)
+- ✅ Ejecutar preprocesamiento (Fase 2)
+- ✅ Entrenar modelos (Random Forest + K-Means)
+- ✅ Generar métricas y visualizaciones
+- ✅ Exportar artefactos (`models/`, `outputs/`)
+
+---
+
+### 2️⃣ Modo Usuario Común (Aplicación Web)
+
+**Ubicación:** `frontend/` (servida por FastAPI)  
+**Descripción:** Interfaz web moderna y responsive para usuarios finales. Consume la API REST para hacer predicciones de partidos y análisis de equipos sin necesidad de conocimientos técnicos.
+
+**Pasos de Ejecución:**
+
+```bash
+# Desde la raíz del proyecto:
+cd c:\ruta\a\proyecto
+
+# Activar el entorno virtual (si no está activado)
+.venv\Scripts\Activate.ps1
+
+# Iniciar servidor FastAPI (en modo desarrollo)
+uvicorn api.main:app --reload
+```
+
+**Acceso:**
+- **URL:** http://127.0.0.1:8000
+- **Puerto:** 8000
+
+**Funcionalidades:**
+- ✅ Simular partidos: Selecciona equipos, año y fase → Obtén predicciones con probabilidades
+- ✅ Perfilador de equipos: Analiza el historial de un equipo → Recibe clasificación por rendimiento histórico
+- ✅ Interfaz responsiva: Compatible con escritorio y dispositivos móviles
+- ✅ Validaciones automáticas: Dropdowns para equipos/fases, validación de años
+
+**Estructura de la Interfaz Web:**
+- **Panel 1 - Simulador de Partidos:** Predice resultados con probabilidades animadas
+- **Panel 2 - Perfilador de Equipos:** Agrupa equipos por rendimiento histórico mediante K-Means
+
+---
+
+## ▶ Ejecución de Fases (Análisis Detallado)
 
 ```bash
 # 1. Descarga el dataset:

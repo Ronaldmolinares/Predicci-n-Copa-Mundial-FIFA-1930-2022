@@ -1,6 +1,8 @@
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
 from api.routers import predict_router, cluster_router
 from api.ml_service import ml_service
 
@@ -41,13 +43,6 @@ app.add_middleware(
 app.include_router(predict_router.router)
 app.include_router(cluster_router.router)
 
-@app.get("/", tags=["General"])
-def root():
-    """
-    Endpoint base para comprobar conectividad básica.
-    """
-    return {"message": "Bienvenido a la API de Predicción del Mundial de la FIFA (Fase 5). Ve a /docs para interactuar."}
-
 @app.get("/health", tags=["General"])
 def health_check():
     """
@@ -61,3 +56,12 @@ def health_check():
             status_code=503, 
             detail="Service Unavailable: La API está arriba pero los modelos no pudieron ser cargados."
         )
+
+# Montar el Frontend
+# Asegurarse de que sirva los estáticos en la raíz.
+FRONTEND_DIR = Path(__file__).resolve().parent.parent / "frontend"
+
+# Creamos el directorio si no existe para que uvicorn no falle al arrancar
+FRONTEND_DIR.mkdir(parents=True, exist_ok=True)
+
+app.mount("/", StaticFiles(directory=str(FRONTEND_DIR), html=True), name="frontend")

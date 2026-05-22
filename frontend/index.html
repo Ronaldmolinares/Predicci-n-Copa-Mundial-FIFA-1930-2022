@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FIFA World Cup Predictor</title>
+    <!-- Importar fuentes de Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Archivo CSS local -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Iconos de FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Fondo animado sutil -->
+    <div class="background-orbs">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <main class="container">
+        <header class="header">
+            <h1 class="glow-text">FIFA Predictor <i class="fa-solid fa-trophy" style="color: #FFD700;"></i></h1>
+            <p>Inteligencia Artificial para predecir resultados y analizar equipos históricos.</p>
+        </header>
+
+        <!-- Navegación por pestañas -->
+        <nav class="tabs">
+            <button class="tab-btn active" id="tab-predict"><i class="fa-solid fa-futbol"></i> Simular Partido</button>
+            <button class="tab-btn" id="tab-cluster"><i class="fa-solid fa-chart-network"></i> Perfilador de Equipos</button>
+        </nav>
+
+        <div class="panels">
+            <!-- PANEL 1: PREDICCIÓN DE PARTIDO -->
+            <section class="panel active glass-panel" id="panel-predict">
+                <h2>Simulación de Encuentro</h2>
+                <form id="form-predict">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="home-team">Equipo Local</label>
+                            <select id="home-team" required>
+                                <option value="">-- Selecciona equipo local --</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="away-team">Equipo Visitante</label>
+                            <select id="away-team" required>
+                                <option value="">-- Selecciona equipo visitante --</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="year">Año del Torneo</label>
+                            <input type="number" id="year" value="2022" min="1930" max="2099" inputmode="numeric" maxlength="4" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="stage">Fase del Torneo</label>
+                            <select id="stage" required>
+                                <option value="">-- Selecciona fase --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-btn" id="btn-predict">
+                        <span>Generar Predicción</span> <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </button>
+                </form>
+
+                <!-- Área de Resultados de Predicción -->
+                <div id="result-predict" class="result-area hidden">
+                    <h3>Resultado Previsto: <span id="predicted-winner" class="highlight"></span></h3>
+                    
+                    <div class="probabilities">
+                        <div class="prob-row">
+                            <div class="prob-label">Gana Local</div>
+                            <div class="progress-bar"><div class="progress-fill home-fill" id="bar-home"></div></div>
+                            <div class="prob-value" id="val-home">0%</div>
+                        </div>
+                        <div class="prob-row">
+                            <div class="prob-label">Empate</div>
+                            <div class="progress-bar"><div class="progress-fill draw-fill" id="bar-draw"></div></div>
+                            <div class="prob-value" id="val-draw">0%</div>
+                        </div>
+                        <div class="prob-row">
+                            <div class="prob-label">Gana Visitante</div>
+                            <div class="progress-bar"><div class="progress-fill away-fill" id="bar-away"></div></div>
+                            <div class="prob-value" id="val-away">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PANEL 2: CLUSTERING DE EQUIPO -->
+            <section class="panel glass-panel" id="panel-cluster">
+                <h2>Perfilador Histórico</h2>
+                <form id="form-cluster">
+                    <div class="input-grid">
+                        <div class="input-group">
+                            <label for="cluster-team">Selección</label>
+                            <select id="cluster-team" required>
+                                <option value="">-- Selecciona equipo --</option>
+                            </select>
+                        </div>
+                        <div class="input-group">
+                            <label for="cluster-year">Año Límite</label>
+                            <input type="number" id="cluster-year" value="2022" min="1930" max="2099" inputmode="numeric" maxlength="4" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="primary-btn" id="btn-cluster">
+                        <span>Analizar Perfil</span> <i class="fa-solid fa-microchip"></i>
+                    </button>
+                </form>
+
+                <!-- Área de Resultados de Clustering -->
+                <div id="result-cluster" class="result-area hidden">
+                    <h3>Clasificación IA:</h3>
+                    <div class="cluster-badge-container">
+                        <div class="cluster-badge" id="cluster-badge">
+                            <!-- Inyectado via JS -->
+                        </div>
+                    </div>
+                    <p class="cluster-desc">El modelo K-Means analizó el historial global del equipo hasta el año solicitado y lo agrupo en esta categoría según su desempeño general, capacidad goleadora y experiencia.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal/Toast para Errores -->
+    <div id="error-toast" class="toast hidden">
+        <i class="fa-solid fa-circle-exclamation"></i>
+        <span id="error-msg">Ha ocurrido un error.</span>
+    </div>
+
+    <!-- Script de lógica -->
+    <script src="app.js"></script>
+</body>
+</html>

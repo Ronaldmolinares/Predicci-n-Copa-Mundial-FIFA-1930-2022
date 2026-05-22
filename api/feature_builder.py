@@ -1,5 +1,12 @@
 import pandas as pd
 from typing import Dict, Any
+import sys
+from pathlib import Path
+
+# Agregar src al path para importar stage_cleaner
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+from stage_cleaner import clean_stage
+
 
 class FeatureBuilder:
     """
@@ -94,8 +101,11 @@ class FeatureBuilder:
         home_stats = self._get_team_stats(home_team, year)
         away_stats = self._get_team_stats(away_team, year)
 
-        # Mapear la fase a su encoding de Fase 2
-        stage_norm = str(stage).lower().strip()
+        # Limpiar y unificar la fase (6 fases estándar)
+        stage_cleaned = clean_stage(stage)
+        
+        # Mapear la fase limpia a su encoding de Fase 2
+        stage_norm = str(stage_cleaned).lower().strip()
         stage_encoded = self.stage_encoding.get(stage_norm, 0)
 
         # Derivar Deltas

@@ -1,6 +1,11 @@
 import json
 import pandas as pd
 from pathlib import Path
+import sys
+
+# Agregar src al path para importar stage_cleaner
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
+from stage_cleaner import clean_stages_dataframe
 
 # Directorio base y subdirectorios
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,5 +31,14 @@ def load_metadata() -> dict:
         return json.load(f)
 
 def load_historical_data() -> pd.DataFrame:
-    """Carga el dataset maestro de partidos que actuará como base de conocimiento."""
-    return pd.read_csv(DATASET_PATH)
+    """
+    Carga el dataset maestro de partidos que actuará como base de conocimiento.
+    Aplica limpieza y unificación de fases (12 → 6 estándar).
+    """
+    df = pd.read_csv(DATASET_PATH)
+    
+    # Aplicar limpieza de fases si la columna 'Round' existe
+    if 'Round' in df.columns and 'Stage_Clean' not in df.columns:
+        df = clean_stages_dataframe(df, column_name='Round')
+    
+    return df
